@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<title>Chapter 01</title>
+</head>
+<body>
+	<div id="div-app" v-cloak>
+		<h1>{{title}}</h1><br>
+		<input type="text" v-model="name" /><br><br>
+		<!-- <span> {{name} {{lastname}} </span><br><br> -->
+		<span> {{fullname}}  </span><br><br>
+		<textarea v-model="artical"></textarea><br>
+		Text area : {{artical}}<br><br>
+		<button @click="loadData()" >Click me</button>
+		<br><br>
+		----------------------------------------<br><br>
+		<table >
+			<thead>
+				<th> No </th>
+				<th> Code </th>
+				<th> Name </th>
+			</thead>
+			<tbody>
+				<tr v-for="(cust,index) in customers">
+					<td>{{index+1}}</td>
+					<td>{{cust.code}}</td>
+					<td>{{cust.name | toUpper }}</td> 
+				</tr>
+				
+			</tbody>
+			
+			
+			
+		</table>
+			
+
+	</div>
+
+</body>
+</html>
+
+<script src="scripts/vue.js"></script>
+<script type="text/javascript">
+	
+	var vmSource = {
+		//work just 'div-app' scope
+		el : "#div-app",
+		// el : "div",
+		data : { //data that you want to collect
+			title : "Hello VueJS",
+			name: "Manassanan",
+			lastname :"Boonnavasin",
+			artical :"",
+			customers : []
+		},
+		
+		//set on any thing
+		methods : {
+			loadData : function(){
+			
+			},
+			clickMe : function(){
+				alert("hello");
+			}
+		},
+
+		//readonly just get 
+		computed : {
+			fullname : function(){
+				return this.name+" "+this.lastname;
+			}
+		},
+
+		//callback function -- Load data form database
+		//run after load page complete
+		mounted : function(){
+			// this.loadData();
+			this.customers.push({code : "C001",name : "Eve"});
+			this.customers.push({code : "C002",name : "Oat"});
+			this.customers.push({code : "C003",name : "Ever"});
+		},
+
+		component : {
+
+		},
+
+		filter : {
+
+		}
+	};
+
+	//start 
+	var vm = new Vue(vmSource);
+
+//Create wown filter
+	Vue.filter("toUpper", function(data){
+		return data.toUpperCase();
+	});
+
+
+
+
+</script>
